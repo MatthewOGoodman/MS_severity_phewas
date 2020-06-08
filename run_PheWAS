@@ -1,0 +1,21 @@
+####################################################################	
+# LOAD DATA	
+####################################################################
+read(MSSS_PheWAS_PartnersEHR.Rdata)
+
+####################################################################	
+# RUN PHEWAS	
+####################################################################
+
+require(PheWAS)
+phewas.results.all.MSSS.25.no.excl=	
+  phewas(phenotypes = phewas.phenotypes.msss, 	
+         predictors = phewas.predictor.msss,	
+         covariates = phewas.covariates.msss[,c("id", "SEX", "censored_race", "censored_smoking", 	
+                                                "age.at.onset", "progressive.onset", 
+                                                "PCP", "HxPhys", "dis.dur", "ICD9.duration")],	
+         phewas.covariates.msss = phewas.covariates
+         min.records = 25, 	
+         additive.genotypes = F, alpha = .05, 	
+         significance.threshold=c("bonferroni", "fdr", "simplem-product"), 	
+         cores=4 )	
